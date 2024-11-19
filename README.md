@@ -1,3 +1,3 @@
-![img.png](img.png)
+![image](image.png)
 
 php bin/console

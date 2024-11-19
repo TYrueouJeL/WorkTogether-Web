@@ -3,13 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[DiscriminatorMap(['customer' => Customer::class])]
+#[ORM\DiscriminatorMap(['customer' => Customer::class])]
 class User
 {
     #[ORM\Id]
@@ -22,6 +23,9 @@ class User
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $role = [];
 
     public function getId(): ?int
     {
@@ -48,6 +52,18 @@ class User
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRole(): array
+    {
+        return $this->role;
+    }
+
+    public function setRole(array $role): static
+    {
+        $this->role = $role;
 
         return $this;
     }
