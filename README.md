@@ -3,3 +3,5 @@
 ![gantt](image-2.png)
 
 php bin/console
+
+npm run build/watch/dev
