@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`user`')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[ORM\DiscriminatorMap(['customer' => Customer::class])]
+#[ORM\DiscriminatorMap(['customer' => Customer::class, 'user' => User::class])]
 class User
 {
     #[ORM\Id]

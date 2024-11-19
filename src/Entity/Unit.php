@@ -18,9 +18,6 @@ class Unit
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $state = null;
-
     #[ORM\ManyToOne(inversedBy: 'units')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Bay $bay = null;
@@ -41,6 +38,9 @@ class Unit
     #[ORM\OneToMany(targetEntity: CommandedUnit::class, mappedBy: 'unit')]
     private Collection $commandedUnits;
 
+    #[ORM\ManyToOne(inversedBy: 'unit')]
+    private ?State $state = null;
+
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
@@ -60,18 +60,6 @@ class Unit
     public function setReference(string $reference): static
     {
         $this->reference = $reference;
-
-        return $this;
-    }
-
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(string $state): static
-    {
-        $this->state = $state;
 
         return $this;
     }
@@ -156,6 +144,18 @@ class Unit
                 $commandedUnit->setUnit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): ?State
+    {
+        return $this->state;
+    }
+
+    public function setState(?State $state): static
+    {
+        $this->state = $state;
 
         return $this;
     }
