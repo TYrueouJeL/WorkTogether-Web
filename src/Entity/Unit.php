@@ -22,9 +22,11 @@ class Unit
     private ?string $state = null;
 
     #[ORM\ManyToOne(inversedBy: 'units')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Bay $bay = null;
 
     #[ORM\ManyToOne(inversedBy: 'units')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Usage $usage = null;
 
     /**

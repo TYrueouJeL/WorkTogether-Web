@@ -27,9 +27,11 @@ class Order
     private ?bool $isAnnual = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Pack $pack = null;
 
     /**

@@ -125,7 +125,9 @@ class AppFixtures extends Fixture
         }
 
         $intervention = new Intervention();
-        $intervention;
+        $intervention->setTitle('Intervention 1');
+        $intervention->setDescription('Description de l\'intervention 1');
+        $intervention->setType($manager->getRepository(Type::class)->findOneBy(['type' => 'Maintenance']));
 
         $manager->flush();
     }

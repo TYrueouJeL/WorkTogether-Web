@@ -14,9 +14,11 @@ class CommandedUnit
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandedUnits')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Order $orders = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandedUnits')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Unit $unit = null;
 
     public function getId(): ?int

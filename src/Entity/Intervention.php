@@ -20,9 +20,11 @@ class Intervention
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'interventions')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Type $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'interventions')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Unit $unit = null;
 
     public function getId(): ?int
