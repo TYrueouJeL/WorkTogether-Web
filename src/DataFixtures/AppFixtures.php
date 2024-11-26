@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
 
         $usage = new Usage();
         $usage->setType('Application Desktop');
-        $usage->setColor('#ff0000"');
+        $usage->setColor('#ff0000');
         $usageTab[] = $usage;
 
         $pack = new Pack();
