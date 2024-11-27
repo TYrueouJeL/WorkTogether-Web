@@ -6,6 +6,11 @@
 
 <div class="container">
     <h2>Page d'accueil</h2>
+    <ul>
+        {% for unit in unitList %}
+            <li>{{ unit.reference }} {{ unit.state.state }}</li>
+        {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}
