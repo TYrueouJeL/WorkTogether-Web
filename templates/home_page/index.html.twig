@@ -1,16 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomePageController!{% endblock %}
-
 {% block body %}
 
 <div class="container">
     <h2>Page d'accueil</h2>
-    <ul>
-        {% for unit in unitList %}
-            <li>{{ unit.reference }} {{ unit.state.state }}</li>
+    <div class="row">
+        {% for pack in packList %}
+            {% if pack.enable == true %}
+                <div class="col-sm-3 mb-2 mb-sm-0">
+                    <div class="card text-center border-secondary">
+                        <div class="card-header">{{ pack.name }}</div>
+                        <div class="card-body">
+                            <p class="card-text">{{ pack.nbrUnits }} unités</p>
+                            <p class="card-text">{{ pack.price }}€</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
 {% endblock %}

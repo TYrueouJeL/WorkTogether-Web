@@ -10,7 +10,6 @@ config:
 hosts:
   10.192.56.2:
     remote_user: remi
-    user: root
     deploy_path: '/var/www/worktogether'
     writable_mode: 'chmod'
     composer_options: '--no-dev --verbose --prefer-dist --optimize-autoloader --no-progress --no-interaction'
