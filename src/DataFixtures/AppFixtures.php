@@ -93,13 +93,13 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('remi@remi.com');
         $user->setPassword('remi');
-        $user->setRole(['ROLE_CLIENT']);
+        $user->setRoles(['ROLE_CLIENT']);
         $userTab[] = $user;
 
         $user = new User();
         $user->setEmail('admin@admin.com');
         $user->setPassword('admin');
-        $user->setRole(['ROLE_CLIENT', 'ROLE_ADMIN']);
+        $user->setRoles(['ROLE_CLIENT', 'ROLE_ADMIN']);
         $userTab[] = $user;
 
         $type = new Type();
@@ -164,7 +164,7 @@ class AppFixtures extends Fixture
         $customer->setPassword('noemye');
         $customer->setFirstname('Noemye');
         $customer->setLastname('Kiso');
-        $customer->setRole(['ROLE_CLIENT']);
+        $customer->setRoles(['ROLE_CLIENT']);
         $customerTab[] = $customer;
 
         $customer = new Customer();
@@ -172,7 +172,7 @@ class AppFixtures extends Fixture
         $customer->setPassword('antonin');
         $customer->setFirstname('Antonin');
         $customer->setLastname('Oracle');
-        $customer->setRole(['ROLE_CLIENT']);
+        $customer->setRoles(['ROLE_CLIENT']);
         $customerTab[] = $customer;
 
         $order = new Order();
