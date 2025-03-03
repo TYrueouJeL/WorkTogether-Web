@@ -12,9 +12,14 @@
         <div class="container">
             <h1>WorkTogether</h1>
             <h3>Service de location de serveur</h3>
-            <a href="/register"><button class="btn btn-primary">Créer un compte</button></a>
-            <a href="/login"><button class="btn btn-primary">Se connecter</button></a>
-            <a href="/logout"><button class="btn btn-primary">Se déconnecter</button></a>
+            <a href="/"><button class="btn btn-primary">Accueil</button></a>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('app_customer_account', {'id': app.user.id}) }}"><button class="btn btn-primary">Mon compte</button></a>
+                <a href="/logout"><button class="btn btn-primary">Se déconnecter</button></a>
+            {% else %}
+                <a href="/register"><button class="btn btn-primary">Créer un compte</button></a>
+                <a href="/login"><button class="btn btn-primary">Se connecter</button></a>
+            {% endif %}
         </div>
 
         {% block body %}{% endblock %}

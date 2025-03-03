@@ -3,6 +3,11 @@
 {% block body %}
 
 <div class="container">
+    {% if userId != null %}
+        <p>Utilisateur connecté : {{ userId }}</p>
+    {% else %}
+        <p>Aucun utilisateur connecté</p>
+    {% endif %}
     <h2>Page d'accueil</h2>
     <div class="row">
         {% for pack in packList %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3>Bienvenue {{ user.firstname }} {{ user.lastname }}</h3>
+
+        <h5>Vos packs</h5>
+        {% for order in orders %}
+            <div class="col-sm-3 mb-2 mb-sm-0">
+                <div class="card text-center border-secondary">
+                    <div class="card-header">{{ order.pack.name }}</div>
+                    <div class="card-body">
+                        <p class="card-text">{{ order.pack.nbrUnits }} unités</p>
+                        <p class="card-text">{{ order.pack.price }}€</p>
+                        <a href="/order/{{ order.id }}"><button class="btn btn-primary">Details</button></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <a href="/"><button class="btn btn-primary">Retour</button></a>
+    </div>
+{% endblock %}

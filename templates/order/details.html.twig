@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail du pack{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3>Commande numéro : {{ order.id }}</h3>
+
+        <ul>
+            <li>Date de début : {{ order.startDate|date('d/m/Y H:i') }}</li>
+            <li>Date de fin : {{ order.endDate|date('d/m/Y H:i') }}</li>
+            <li>Durée de la location :
+                {% if order.isannual %}
+                    1 an
+                {% else %}
+                    1 mois
+                {% endif %}
+            </li>
+            <li>Nom du pack : {{ order.pack.name }}</li>
+            <li>Nombre d'unités : {{ order.pack.nbrUnits }}</li>
+        </ul>
+    </div>
+{% endblock %}

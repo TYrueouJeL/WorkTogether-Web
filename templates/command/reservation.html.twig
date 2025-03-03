@@ -4,9 +4,21 @@
 
 {% block body %}
     <div class="container">
-        <h2>Réservation d'unité</h2>
+        <h2>Réservation</h2>
+        <h4>{{ pack.name }}</h4>
+        <p>Caractéristiques :</p>
+        <ul>
+            <li>Nombre d'unités : {{ pack.nbrUnits }}</li>
+            <li>Réduction Annuelle : {{ pack.annualReductionPercentage }} %</li>
+            <li>Prix : {{ pack.price }}€</li>
+        </ul>
 
-        {{ form(form) }}
+{#        {{ form_start(form) }}#}
+        {{ form_start(form, {'action': path('app_home_page'), 'method': 'GET'}) }}
+            {{ form_row(form.isAnnual) }}
+
+            <button type="submit" class="btn btn-primary">Réserver</button>
+        {{ form_end(form) }}
 
         <a href="/" class="btn btn-primary">Retour</a>
     </div>
