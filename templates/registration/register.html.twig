@@ -3,20 +3,34 @@
 {% block title %}Création de compte{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Création de compte</h1>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-sm p-4" style="max-width: 500px; width: 100%;">
+            <h1 class="text-center text-primary">Création de compte</h1>
 
-        {{ form_errors(registrationForm) }}
+            {% if registrationForm.vars.errors|length > 0 %}
+                <div class="alert alert-danger">
+                    {{ form_errors(registrationForm) }}
+                </div>
+            {% endif %}
 
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.password) }}
-            {{ form_row(registrationForm.firstname) }}
-            {{ form_row(registrationForm.lastname) }}
+            {{ form_start(registrationForm) }}
+            <div class="mb-3">
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.password, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                {{ form_row(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+            </div>
 
-            <button type="submit" class="btn btn-primary">S'enregistrer</button>
-        {{ form_end(registrationForm) }}
+            <button type="submit" class="btn btn-primary w-100">S'enregistrer</button>
+            {{ form_end(registrationForm) }}
 
-        <a href="/" class="btn btn-primary">Retour</a>
+            <a href="/" class="btn btn-secondary w-100 mt-2">Retour</a>
+        </div>
     </div>
 {% endblock %}

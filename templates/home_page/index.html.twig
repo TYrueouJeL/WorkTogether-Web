@@ -1,30 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container py-5">
+        {% if userId != null %}
+            <div class="alert alert-info text-center fw-bold">Utilisateur connecté : {{ userId }}</div>
+        {% else %}
+            <div class="alert alert-warning text-center fw-bold">Aucun utilisateur connecté</div>
+        {% endif %}
 
-<div class="container">
-    {% if userId != null %}
-        <p>Utilisateur connecté : {{ userId }}</p>
-    {% else %}
-        <p>Aucun utilisateur connecté</p>
-    {% endif %}
-    <h2>Page d'accueil</h2>
-    <div class="row">
-        {% for pack in packList %}
-            {% if pack.enable == true %}
-                <div class="col-sm-3 mb-2 mb-sm-0">
-                    <div class="card text-center border-secondary">
-                        <div class="card-header">{{ pack.name }}</div>
-                        <div class="card-body">
-                            <p class="card-text">{{ pack.nbrUnits }} unités</p>
-                            <p class="card-text">{{ pack.price }}€</p>
-                            <a href="/command/{{ pack.id }}"><button class="btn btn-primary">Commander</button></a>
+        <h2 class="text-primary text-center my-4">Découvrez nos packs</h2>
+
+        <div class="row g-4">
+            {% for pack in packList %}
+                {% if pack.enable == true %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card border-0 shadow-lg h-100">
+                            <div class="card-header bg-primary text-white text-uppercase text-center fw-bold">
+                                {{ pack.name }}
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text fs-5"><strong>{{ pack.nbrUnits }}</strong> unités</p>
+                                <p class="card-text text-success fs-4 fw-bold">{{ pack.price }}€</p>
+                                <a href="/command/{{ pack.id }}" class="btn btn-outline-primary w-100">Commander</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endif %}
-        {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
-</div>
-
 {% endblock %}

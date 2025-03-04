@@ -16,6 +16,25 @@ class UnitRepository extends ServiceEntityRepository
         parent::__construct($registry, Unit::class);
     }
 
+    public function findAvailableUnits(int $limit)
+    {
+        $query = '
+        select unit.id
+        from unit
+        where unit.id NOT IN (
+	        select unit_id
+	        from commanded_unit
+	        left join `order` on commanded_unit.orders_id = `order`.id
+	        where end_date > current_date()
+        )
+        limit ' . $limit . ';';
+
+        $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+        $result = $stmt->executeQuery()->fetchAllAssociative();
+
+        return array_map(fn($unit) => $unit['id'], $result);
+    }
+
 //    /**
 //     * @return Unit[] Returns an array of Unit objects
 //     */

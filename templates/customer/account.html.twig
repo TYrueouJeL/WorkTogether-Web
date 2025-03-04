@@ -3,23 +3,30 @@
 {% block title %}Mon compte{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h3>Bienvenue {{ user.firstname }} {{ user.lastname }}</h3>
+    <div class="container py-5">
+        <div class="alert alert-info text-center fw-bold">
+            Bienvenue {{ user.firstname }} {{ user.lastname }}
+        </div>
 
-        <h5>Vos packs</h5>
-        {% for order in orders %}
-            <div class="col-sm-3 mb-2 mb-sm-0">
-                <div class="card text-center border-secondary">
-                    <div class="card-header">{{ order.pack.name }}</div>
-                    <div class="card-body">
-                        <p class="card-text">{{ order.pack.nbrUnits }} unités</p>
-                        <p class="card-text">{{ order.pack.price }}€</p>
-                        <a href="/order/{{ order.id }}"><button class="btn btn-primary">Details</button></a>
+        <h2 class="text-primary text-center my-4">Vos packs</h2>
+
+        <div class="row g-4">
+            {% for order in orders %}
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card border-0 shadow-lg h-100">
+                        <div class="card-header bg-primary text-white text-uppercase text-center fw-bold">
+                            {{ order.pack.name }}
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text fs-5"><strong>{{ order.pack.nbrUnits }}</strong> unités</p>
+                            <p class="card-text">Durée : <strong>{{ order.duration }}</strong> mois</p>
+                            <p class="card-text">Date de fin : <strong>{{ order.endDate|date('d/m/Y') }}</strong></p>
+                            <p class="card-text text-success fs-4 fw-bold">{{ order.price }}€</p>
+                            <a href="/order/{{ order.id }}" class="btn btn-outline-primary w-100">Détails</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
-
-        <a href="/"><button class="btn btn-primary">Retour</button></a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

@@ -3,23 +3,42 @@
 {% block title %}Réservation d'unité{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h2>Réservation</h2>
-        <h4>{{ pack.name }}</h4>
-        <p>Caractéristiques :</p>
-        <ul>
-            <li>Nombre d'unités : {{ pack.nbrUnits }}</li>
-            <li>Réduction Annuelle : {{ pack.annualReductionPercentage }} %</li>
-            <li>Prix : {{ pack.price }}€</li>
-        </ul>
+    <div class="container py-5">
+        <h2 class="text-primary text-center mb-4">Réservation</h2>
 
-{#        {{ form_start(form) }}#}
-        {{ form_start(form, {'action': path('app_home_page'), 'method': 'GET'}) }}
-            {{ form_row(form.isAnnual) }}
+        <div class="row justify-content-center">
+            <!-- Bloc Informations du Pack -->
+            <div class="col-lg-5 col-md-6 d-flex">
+                <div class="border rounded p-4 shadow-sm bg-light w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="text-dark">{{ pack.name }}</h4>
+                        <p class="fw-bold">Caractéristiques :</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Nombre d'unités :</strong> {{ pack.nbrUnits }}</li>
+                            <li><strong>Réduction Annuelle :</strong> {{ pack.annualReductionPercentage }} %</li>
+                            <li><strong>Prix mensuel :</strong> <span class="text-success fw-bold">{{ pack.price }}€</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <button type="submit" class="btn btn-primary">Réserver</button>
-        {{ form_end(form) }}
+            <!-- Bloc Formulaire de Réservation -->
+            <div class="col-lg-5 col-md-6 d-flex">
+                <div class="border rounded p-4 shadow-sm w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_row(form.subscriptionTime, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Réserver</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <a href="/" class="btn btn-primary">Retour</a>
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-secondary">Retour</a>
+        </div>
     </div>
 {% endblock %}

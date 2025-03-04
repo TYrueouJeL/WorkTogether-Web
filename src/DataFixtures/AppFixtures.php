@@ -92,13 +92,13 @@ class AppFixtures extends Fixture
 
         $user = new User();
         $user->setEmail('remi@remi.com');
-        $user->setPassword('remi');
+        $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK'); // password = testest
         $user->setRoles(['ROLE_CLIENT']);
         $userTab[] = $user;
 
         $user = new User();
         $user->setEmail('admin@admin.com');
-        $user->setPassword('admin');
+        $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
         $user->setRoles(['ROLE_CLIENT', 'ROLE_ADMIN']);
         $userTab[] = $user;
 
@@ -161,7 +161,7 @@ class AppFixtures extends Fixture
 
         $customer = new Customer();
         $customer->setEmail('noemye@noemye.com');
-        $customer->setPassword('noemye');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
         $customer->setFirstname('Noemye');
         $customer->setLastname('Kiso');
         $customer->setRoles(['ROLE_CLIENT']);
@@ -169,7 +169,7 @@ class AppFixtures extends Fixture
 
         $customer = new Customer();
         $customer->setEmail('antonin@antonin.com');
-        $customer->setPassword('antonin');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
         $customer->setFirstname('Antonin');
         $customer->setLastname('Oracle');
         $customer->setRoles(['ROLE_CLIENT']);
@@ -177,18 +177,32 @@ class AppFixtures extends Fixture
 
         $order = new Order();
         $order->setStartDate(new \DateTime('2021-01-01'));
-        $order->setEndDate(new \DateTime('2021-02-01'));
+        $order->setEndDate(new \DateTime('2021-07-01'));
+        $order->setDuration(6);
         $order->setAnnual(false);
         $order->setPack($packTab[0]);
         $order->setCustomer($customerTab[0]);
+        $order->setPrice(60);
         $orderTab[] = $order;
 
         $order = new Order();
         $order->setStartDate(new \DateTime('2021-01-01'));
         $order->setEndDate(new \DateTime('2022-01-01'));
+        $order->setDuration(12);
         $order->setAnnual(true);
         $order->setPack($packTab[1]);
         $order->setCustomer($customerTab[1]);
+        $order->setPrice(100 * 0.7);
+        $orderTab[] = $order;
+
+        $order = new Order();
+        $order->setStartDate(new \DateTime('2025-03-01'));
+        $order->setEndDate(new \DateTime('2025-04-01'));
+        $order->setDuration(1);
+        $order->setAnnual(false);
+        $order->setPack($packTab[0]);
+        $order->setCustomer($customerTab[1]);
+        $order->setPrice(10);
         $orderTab[] = $order;
 
         $commandedunit = new CommandedUnit();
@@ -202,6 +216,11 @@ class AppFixtures extends Fixture
             $commandedunit->setUnit($unitTab[$i]);
             $commandedunitTab[] = $commandedunit;
         }
+
+        $commandedunit = new CommandedUnit();
+        $commandedunit->setOrders($orderTab[2]);
+        $commandedunit->setUnit($unitTab[11]);
+        $commandedunitTab[] = $commandedunit;
 
         foreach ($stateTab as $state) {
             $manager->persist($state);

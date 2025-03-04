@@ -3,21 +3,22 @@
 {% block title %}Détail du pack{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h3>Commande numéro : {{ order.id }}</h3>
+    <div class="container py-5">
+        <h3 class="text-primary mb-4">Commande n°{{ order.id }}</h3>
 
-        <ul>
-            <li>Date de début : {{ order.startDate|date('d/m/Y H:i') }}</li>
-            <li>Date de fin : {{ order.endDate|date('d/m/Y H:i') }}</li>
-            <li>Durée de la location :
-                {% if order.isannual %}
-                    1 an
-                {% else %}
-                    1 mois
-                {% endif %}
-            </li>
-            <li>Nom du pack : {{ order.pack.name }}</li>
-            <li>Nombre d'unités : {{ order.pack.nbrUnits }}</li>
-        </ul>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Date de début :</strong> {{ order.startDate|date('d/m/Y') }}</li>
+                    <li class="list-group-item"><strong>Date de fin :</strong> {{ order.endDate|date('d/m/Y') }}</li>
+                    <li class="list-group-item"><strong>Durée de la location :</strong> {{ order.duration }} mois</li>
+                    <li class="list-group-item"><strong>Nom du pack :</strong> {{ order.pack.name }}</li>
+                    <li class="list-group-item"><strong>Nombre d'unités :</strong> {{ order.pack.nbrUnits }}</li>
+                    <li class="list-group-item"><strong>Prix total :</strong> {{ order.price }}€</li>
+                </ul>
+
+                <a href="/" class="btn btn-secondary mt-3">Retour</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -40,6 +40,12 @@ class Order
     #[ORM\OneToMany(targetEntity: CommandedUnit::class, mappedBy: 'orders')]
     private Collection $commandedUnits;
 
+    #[ORM\Column]
+    private ?int $Duration = null;
+
+    #[ORM\Column]
+    private ?int $Price = null;
+
     public function __construct()
     {
         $this->commandedUnits = new ArrayCollection();
@@ -136,6 +142,30 @@ class Order
                 $commandedUnit->setOrders(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->Duration;
+    }
+
+    public function setDuration(int $Duration): static
+    {
+        $this->Duration = $Duration;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->Price;
+    }
+
+    public function setPrice(int $Price): static
+    {
+        $this->Price = $Price;
 
         return $this;
     }
