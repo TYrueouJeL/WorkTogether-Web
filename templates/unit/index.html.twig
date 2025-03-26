@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UnitController!{% endblock %}
+{% block title %}Détail de l'unité{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container py-5">
+        <h3 class="text-primary mb-4">Unité n°{{ unit.id }}</h3>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/remig/Document/Programmes/IIA/BTS2/WorkTogether/Client léger/WorkTogether/src/Controller/UnitController.php</code></li>
-        <li>Your template at <code>C:/Users/remig/Document/Programmes/IIA/BTS2/WorkTogether/Client léger/WorkTogether/templates/unit/index.html.twig</code></li>
-    </ul>
-</div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="mb-3">Détails :</h5>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item"><strong>Baie :</strong> {{ unit.bay.reference }}</li>
+                    <li class="list-group-item"><strong>Utilisation :</strong> <span style="color: {{ unit.usage.color }}">{{ unit.usage.type }}</span></li>
+                    <li class="list-group-item"><strong>État :</strong> <span style="color: {{ unit.state.state == 'Allumée' ? 'green' : 'red' }}">{{ unit.state.state }}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}

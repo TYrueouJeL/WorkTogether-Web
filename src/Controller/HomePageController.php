@@ -18,7 +18,9 @@ class HomePageController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            $userId = $user->getUserIdentifier();
+            $userFirstname = $user->getFirstname();
+            $userLastname = $user->getLastname();
+            $userId = $userFirstname . ' ' . $userLastname;
         }
         else {
             $userId = null;

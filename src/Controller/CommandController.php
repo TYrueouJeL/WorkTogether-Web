@@ -19,16 +19,20 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CommandController extends AbstractController
 {
-    #[IsGranted('ROLE_CLIENT')]
     #[Route('/command/{id}', name: 'app_command_reservation')]
     public function commandReservation(EntityManagerInterface $entityManager, int $id, PackRepository $packRepository, Request $request, Pack $pack, UnitRepository $unitRepository): Response
     {
+        $user = $this->getUser();
+
+        if ($user == null)
+        {
+            return $this->redirect('/login');
+        }
+
         $order = new Order();
         $form = $this->createForm(OrderReservationFormType::class, $order);
 
         $form->handleRequest($request);
-
-        $user = $this->getUser();
 
         $numberOfUnits = $pack->getNbrUnits();
 

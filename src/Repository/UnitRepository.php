@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Unit;
+use App\Entity\Usage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,6 +35,38 @@ class UnitRepository extends ServiceEntityRepository
 
         return array_map(fn($unit) => $unit['id'], $result);
     }
+
+//    public function freeUnits(): void
+//    {
+//        $conn = $this->getEntityManager()->getConnection();
+//        $sql = '
+//            SELECT cu.unit_id
+//            FROM commanded_unit cu
+//            JOIN `order` o ON cu.orders_id = o.id
+//            WHERE o.end_date < CURRENT_DATE();
+//        ';
+//        $stmt = $conn->prepare($sql);
+//        $result = $stmt->executeQuery()->fetchAllAssociative();
+//
+//        $unitIds = array_map(fn($unit) => $unit['unit_id'], $result);
+//
+//        if (!empty($unitIds)) {
+//            $units = $this->findBy(['id' => $unitIds]);
+//
+//            $usage = $this->getEntityManager()->getRepository(Usage::class)->findOneBy(['type' => 'Inactive']);
+//
+//            foreach ($units as $unit) {
+//                $unit->setUsage($usage);
+//                $this->getEntityManager()->persist($unit);
+//            }
+//
+//            $this->getEntityManager()->flush();
+//
+//            $deleteSql = 'DELETE FROM commanded_unit WHERE unit_id IN (:unitIds)';
+//            $deleteStmt = $conn->prepare($deleteSql);
+//            $deleteStmt->executeQuery(['unitIds' => $unitIds]);
+//        }
+//    }
 
 //    /**
 //     * @return Unit[] Returns an array of Unit objects

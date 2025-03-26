@@ -7,13 +7,14 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Polyfill\Intl\Icu\Exception\NotImplementedException;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
 #[ORM\DiscriminatorMap(['customer' => Customer::class, 'user' => User::class])]
-class User implements PasswordAuthenticatedUserInterface, UserInterface
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,8 +27,8 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::JSON)]
-    private array $role = [];
+    #[ORM\Column]
+    private ?int $role = null;
 
     public function getId(): ?int
     {
@@ -60,10 +61,15 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
 
     public function getRoles(): array
     {
+        return [];
+    }
+
+    public function getRole(): ?int
+    {
         return $this->role;
     }
 
-    public function setRoles(array $role): static
+    public function setRole(?int $role): static
     {
         $this->role = $role;
 

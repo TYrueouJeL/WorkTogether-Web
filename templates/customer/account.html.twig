@@ -12,21 +12,27 @@
 
         <div class="row g-4">
             {% for order in orders %}
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="card border-0 shadow-lg h-100">
-                        <div class="card-header bg-primary text-white text-uppercase text-center fw-bold">
-                            {{ order.pack.name }}
-                        </div>
-                        <div class="card-body text-center">
-                            <p class="card-text fs-5"><strong>{{ order.pack.nbrUnits }}</strong> unités</p>
-                            <p class="card-text">Durée : <strong>{{ order.duration }}</strong> mois</p>
-                            <p class="card-text">Date de fin : <strong>{{ order.endDate|date('d/m/Y') }}</strong></p>
-                            <p class="card-text text-success fs-4 fw-bold">{{ order.price }}€</p>
-                            <a href="/order/{{ order.id }}" class="btn btn-outline-primary w-100">Détails</a>
+                {% if order.endDate > now %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card border-0 shadow-lg h-100">
+                            <div class="card-header bg-primary text-white text-uppercase text-center fw-bold">
+                                {{ order.pack.name }}
+                            </div>
+                            <div class="card-body text-center">
+                                <p class="card-text fs-5"><strong>{{ order.pack.nbrUnits }}</strong> unités</p>
+                                <p class="card-text">Durée : <strong>{{ order.duration }}</strong> mois</p>
+                                <p class="card-text">Date de fin : <strong>{{ order.endDate|date('d/m/Y') }}</strong></p>
+                                <p class="card-text text-success fs-4 fw-bold">{{ order.price }}€</p>
+                                <a href="/order/{{ order.id }}" class="btn btn-outline-primary w-100">Détails</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% endif %}
             {% endfor %}
         </div>
+
+{#        <div>#}
+{#            <a class="btn btn-primary mt-4" href="{{ path('app_customer_free_units', {'id': app.user.id}) }}">Clear units</a>#}
+{#        </div>#}
     </div>
 {% endblock %}

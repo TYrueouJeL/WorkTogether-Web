@@ -37,17 +37,22 @@ class AppFixtures extends Fixture
 
         $usage = new Usage();
         $usage->setType('Site Web');
-        $usage->setColor('#0000ff');
+        $usage->setColor('#007bff');
         $usageTab[] = $usage;
 
         $usage = new Usage();
         $usage->setType('Application Mobile');
-        $usage->setColor('#00ff00');
+        $usage->setColor('#28a745');
         $usageTab[] = $usage;
 
         $usage = new Usage();
-        $usage->setType('Application Desktop');
-        $usage->setColor('#ff0000');
+        $usage->setType('Application Bureau');
+        $usage->setColor('#ffc107');
+        $usageTab[] = $usage;
+
+        $usage = new Usage();
+        $usage->setType('Inactive');
+        $usage->setColor('#6c757d');
         $usageTab[] = $usage;
 
         $pack = new Pack();
@@ -93,13 +98,13 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('remi@remi.com');
         $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK'); // password = testest
-        $user->setRoles(['ROLE_CLIENT']);
+        $user->setRole(1);
         $userTab[] = $user;
 
         $user = new User();
         $user->setEmail('admin@admin.com');
         $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
-        $user->setRoles(['ROLE_CLIENT', 'ROLE_ADMIN']);
+        $user->setRole(2);
         $userTab[] = $user;
 
         $type = new Type();
@@ -115,7 +120,7 @@ class AppFixtures extends Fixture
         $stateTab[] = $state;
 
         $state = new State();
-        $state->setState('Eteinte');
+        $state->setState('Éteinte');
         $stateTab[] = $state;
 
         for ($i = 1; $i <= 30; $i++) {
@@ -131,15 +136,15 @@ class AppFixtures extends Fixture
                     $unit = new Unit();
                     $unit->setReference('B' . str_pad($i, 3, '0', STR_PAD_LEFT) . 'U' . str_pad($j, 3, '0', STR_PAD_LEFT));
                     $unit->setBay($bayTab[$i - 1]);
-                    $unit->setState($stateTab[0]);
-                    $unit->setUsage($usageTab[0]);
+                    $unit->setState($stateTab[rand(0, 1)]);
+                    $unit->setUsage($usageTab[rand(0, 3)]);
                     $unitTab[] = $unit;
                 } else {
                     $unit = new Unit();
                     $unit->setReference('B' . str_pad($i, 3, '0', STR_PAD_LEFT) . 'U' . str_pad($j, 3, '0', STR_PAD_LEFT));
                     $unit->setBay($bayTab[$i - 1]);
-                    $unit->setState($stateTab[1]);
-                    $unit->setUsage($usageTab[1]);
+                    $unit->setState($stateTab[rand(0, 1)]);
+                    $unit->setUsage($usageTab[rand(0, 3)]);
                     $unitTab[] = $unit;
                 }
             }
@@ -164,7 +169,7 @@ class AppFixtures extends Fixture
         $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
         $customer->setFirstname('Noemye');
         $customer->setLastname('Kiso');
-        $customer->setRoles(['ROLE_CLIENT']);
+        $customer->setRole(1);
         $customerTab[] = $customer;
 
         $customer = new Customer();
@@ -172,7 +177,7 @@ class AppFixtures extends Fixture
         $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
         $customer->setFirstname('Antonin');
         $customer->setLastname('Oracle');
-        $customer->setRoles(['ROLE_CLIENT']);
+        $customer->setRole(1);
         $customerTab[] = $customer;
 
         $order = new Order();
@@ -205,6 +210,16 @@ class AppFixtures extends Fixture
         $order->setPrice(10);
         $orderTab[] = $order;
 
+        $order = new Order();
+        $order->setStartDate(new \DateTime('2025-03-25'));
+        $order->setEndDate(new \DateTime('2025-04-25'));
+        $order->setDuration(1);
+        $order->setAnnual(false);
+        $order->setPack($packTab[1]);
+        $order->setCustomer($customerTab[1]);
+        $order->setPrice(100);
+        $orderTab[] = $order;
+
         $commandedunit = new CommandedUnit();
         $commandedunit->setOrders($orderTab[0]);
         $commandedunit->setUnit($unitTab[0]);
@@ -221,6 +236,13 @@ class AppFixtures extends Fixture
         $commandedunit->setOrders($orderTab[2]);
         $commandedunit->setUnit($unitTab[11]);
         $commandedunitTab[] = $commandedunit;
+
+        for ($i = 1; $i <= 10; $i++) {
+            $commandedunit = new CommandedUnit();
+            $commandedunit->setOrders($orderTab[3]);
+            $commandedunit->setUnit($unitTab[$i]);
+            $commandedunitTab[] = $commandedunit;
+        }
 
         foreach ($stateTab as $state) {
             $manager->persist($state);
