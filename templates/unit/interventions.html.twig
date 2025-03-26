@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interventions{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h3 class="text-primary mb-4">Unité n°{{ unit.id }}</h3>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="mb-3">Unités :</h5>
+                {% for intervention in interventions %}
+                    <div>
+                        <h6 class="mt-3">Intervention n°{{ intervention.id }}</h6>
+                        <ul class="list-group">
+                            <li class="list-group-item">{{ intervention.title }}</li>
+                            <li class="list-group-item">{{ intervention.description }}</li>
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/unit/{{ unit.id }}" class="btn btn-secondary mt-3">Retour</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

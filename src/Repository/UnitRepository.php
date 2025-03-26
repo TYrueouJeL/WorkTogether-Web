@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\State;
 use App\Entity\Unit;
 use App\Entity\Usage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -34,6 +35,32 @@ class UnitRepository extends ServiceEntityRepository
         $result = $stmt->executeQuery()->fetchAllAssociative();
 
         return array_map(fn($unit) => $unit['id'], $result);
+    }
+
+    public function turnOnUnit(int $unitId): void
+    {
+        $entityManager = $this->getEntityManager();
+        $unit = $this->find($unitId);
+
+        if ($unit) {
+            $state = $this->getEntityManager()->getRepository(State::class)->findOneBy(['state' => 'Allumée']);
+            $unit->setState($state);
+            $entityManager->persist($unit);
+            $entityManager->flush();
+        }
+    }
+
+    public function turnOffUnit(int $unitId): void
+    {
+        $entityManager = $this->getEntityManager();
+        $unit = $this->find($unitId);
+
+        if ($unit) {
+            $state = $this->getEntityManager()->getRepository(State::class)->findOneBy(['state' => 'Éteinte']);
+            $unit->setState($state);
+            $entityManager->persist($unit);
+            $entityManager->flush();
+        }
     }
 
 //    public function freeUnits(): void

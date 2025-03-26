@@ -181,13 +181,13 @@ class AppFixtures extends Fixture
         $customerTab[] = $customer;
 
         $order = new Order();
-        $order->setStartDate(new \DateTime('2021-01-01'));
-        $order->setEndDate(new \DateTime('2021-07-01'));
-        $order->setDuration(6);
-        $order->setAnnual(false);
+        $order->setStartDate(new \DateTime('2025-01-01'));
+        $order->setEndDate(new \DateTime('2026-01-01'));
+        $order->setDuration(12);
+        $order->setAnnual(true);
         $order->setPack($packTab[0]);
-        $order->setCustomer($customerTab[0]);
-        $order->setPrice(60);
+        $order->setCustomer($customerTab[1]);
+        $order->setPrice(120 * 0.8);
         $orderTab[] = $order;
 
         $order = new Order();

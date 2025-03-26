@@ -15,6 +15,19 @@
                     <li class="list-group-item"><strong>État :</strong> <span style="color: {{ unit.state.state == 'Allumée' ? 'green' : 'red' }}">{{ unit.state.state }}</span></li>
                 </ul>
             </div>
+
+            <div class="col-md-6">
+                <h5 class="mb-3">Gestion de l'unité :</h5>
+                <div class="d-flex justify-content-evenly">
+                    {% if unit.state.state == 'Allumée' %}
+                        <a href="/unit/{{ unit.id }}/turn-off" class="btn btn-outline-danger">Éteindre</a>
+                    {% else %}
+                        <a href="/unit/{{ unit.id }}/turn-on" class="btn btn-outline-success">Allumer</a>
+                    {% endif %}
+                    <a href="/unit/{{ unit.id }}/usage" class="btn btn-outline-primary">Changer d'utilisation</a>
+                    <a href="/unit/{{ unit.id }}/interventions" class="btn btn-outline-dark">Interventions</a>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
