@@ -5,11 +5,15 @@ namespace App\Controller;
 use App\Repository\OrderRepository;
 use App\Repository\PackRepository;
 use App\Repository\UnitRepository;
+use App\Repository\UsageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\HttpFoundation\Request;
 
 class CustomerController extends AbstractController
 {
@@ -38,17 +42,57 @@ class CustomerController extends AbstractController
         ]);
     }
 
-//    #[Route('/customer/{id}/free-units', name: 'app_customer_free_units')]
-//    public function freeUnits(UnitRepository $unitRepository, int $id): Response
-//    {
-//        $user = $this->getUser();
-//
-//        if ($user == null || $user->getId() != $id) {
-//            return $this->redirect('/');
-//        }
-//
-//        $unitRepository->freeUnits();
-//
-//        return $this->redirectToRoute('app_customer_account', ['id' => $id]);
-//    }
+    #[Route('/customer/{id}/data', name: 'app_customer_data')]
+    public function data(int $id): Response
+    {
+        $user = $this->getUser();
+
+        if ($user == null || $user->getId() != $id)
+        {
+            return $this->redirect('/');
+        }
+
+        return $this->render('customer/data.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/customer/{id}/data/modify/{option}')]
+    public function modify(int $id, string $option, Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if ($user == null || $user->getId() != $id) {
+            return $this->redirect('/');
+        }
+
+        if ($request->isMethod('POST')) {
+            switch ($option) {
+                case 'firstname' :
+                    $user->setFirstname($request->request->get('firstname'));
+                    break;
+                case 'lastname' :
+                    $user->setLastname($request->request->get('lastname'));
+                    break;
+                case 'password' :
+                    $plainPassword = $request->request->get('password');
+                    $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+                    $user->setPassword($hashedPassword);
+                    break;
+                default :
+                    return $this->redirect('/customer/' . $id . '/data');
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirect('/customer/' . $id . '/data');
+        }
+
+        return $this->render('customer/modify.html.twig', [
+            'id' => $id,
+            'option' => $option,
+            'user' => $user,
+        ]);
+    }
 }

@@ -29,10 +29,10 @@
                     </div>
                 {% endif %}
             {% endfor %}
-        </div>
 
-{#        <div>#}
-{#            <a class="btn btn-primary mt-4" href="{{ path('app_customer_free_units', {'id': app.user.id}) }}">Clear units</a>#}
-{#        </div>#}
+            <div>
+                <a class="btn btn-primary mt-4" href="/customer/{{ user.id }}/data">Mes données</a>
+            </div>
+        </div>
     </div>
 {% endblock %}
