@@ -3,12 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Unit;
+use App\Entity\Usage;
+use App\Form\UsageFormType;
 use App\Repository\CommandedUnitRepository;
 use App\Repository\InterventionRepository;
 use App\Repository\UnitRepository;
+use App\Repository\UsageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 final class UnitController extends AbstractController{
     #[Route('/unit/{id}', name: 'app_unit')]
@@ -25,6 +30,7 @@ final class UnitController extends AbstractController{
 
         return $this->render('unit/index.html.twig', [
             'unit' => $unit,
+            'order' => $order,
         ]);
     }
 
@@ -53,6 +59,38 @@ final class UnitController extends AbstractController{
         return $this->render('unit/interventions.html.twig', [
             'unit' => $unit,
             'interventions' => $interventions,
+        ]);
+    }
+
+    #[Route('/unit/{id}/usage', name: 'app_unit_usage')]
+    public function usage(int $id, UnitRepository $unitRepository, UsageRepository $usageRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $unit = $unitRepository->find($id);
+
+        $usages = $usageRepository->findAll();
+        $usageChoices = [];
+        foreach ($usages as $usage) {
+            $usageChoices[$usage->getType()] = $usage->getId();
+        }
+
+        $form = $this->createForm(UsageFormType::class, null, ['usage_choices' => $usageChoices]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $usageId = $form->get('type')->getData();
+            $usage = $usageRepository->find($usageId);
+            $unit->setUsage($usage);
+
+            $entityManager->persist($unit);
+            $entityManager->flush();
+
+            return $this->redirect('/unit/' . $id);
+        }
+
+        return $this->render('unit/usage.html.twig', [
+            'unit' => $unit,
+            'form' => $form,
         ]);
     }
 }
