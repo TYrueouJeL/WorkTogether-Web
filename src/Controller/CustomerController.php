@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\OrderRepository;
 use App\Repository\PackRepository;
 use App\Repository\UnitRepository;
@@ -94,5 +95,36 @@ class CustomerController extends AbstractController
             'option' => $option,
             'user' => $user,
         ]);
+    }
+
+    #[Route('/customer/{id}/delete', name: 'app_customer_delete')]
+    public function delete(int $id): Response
+    {
+        $user = $this->getUser();
+
+        return $this->render('customer/delete.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/customer/{id}/suppression', name: 'app_customer_suppression')]  
+    public function suppression(int $id, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        if ($user == null || $user->getId() != $id) {
+            return $this->redirect('/');
+        }
+
+        $user->setEmail('anonymous');
+        $user->setPassword('');
+        $user->setRole(0);
+        $user->setFirstname('anonymous');
+        $user->setLastname('anonymous');
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirect('/logout');
     }
 }

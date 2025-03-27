@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression du compte{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-sm p-4" style="max-width: 500px; width: 100%;">
+            <h2>Suppression du compte</h2>
+
+            <p>Voulez-vous vraiment supprimer votre compte ?</p>
+
+            <div class="mb-3">
+                <a href="/customer/{{ user.id }}/suppression" class="btn btn-outline-danger">Oui</a>
+            </div>
+            <div>
+                <a href="/customer/{{ user.id }}/data" class="btn btn-outline-success">Non</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
