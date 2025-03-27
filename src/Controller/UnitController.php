@@ -11,9 +11,12 @@ use App\Repository\UnitRepository;
 use App\Repository\UsageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Config\Framework\SerializerConfig;
 
 final class UnitController extends AbstractController{
     #[Route('/unit/{id}', name: 'app_unit')]
@@ -92,5 +95,19 @@ final class UnitController extends AbstractController{
             'unit' => $unit,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/api/unit/{id}', name: 'app_unit_api', methods: ['GET'])]
+    public function unitAPI(int $id, UnitRepository $unitRepository, SerializerInterface $serializer): JsonResponse
+    {
+        $unit = $unitRepository->find($id);
+
+        if (!$unit) {
+            return new JsonResponse(['error' => 'Unit not found'], 404);
+        }
+
+        $data = $serializer->normalize($unit, null, ['groups' => 'unit:read']);
+
+        return new JsonResponse($data, 200);
     }
 }

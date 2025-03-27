@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use PhpParser\Node\Name;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UsageRepository::class)]
 #[ORM\Table(name: '`usage`')]
@@ -18,6 +19,7 @@ class Usage
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['unit:read'])]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]

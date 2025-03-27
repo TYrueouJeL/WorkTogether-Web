@@ -6,6 +6,7 @@ use App\Repository\UnitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UnitRepository::class)]
 class Unit
@@ -16,6 +17,7 @@ class Unit
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['unit:read'])]
     private ?string $reference = null;
 
     #[ORM\ManyToOne(inversedBy: 'units')]
@@ -24,6 +26,7 @@ class Unit
 
     #[ORM\ManyToOne(inversedBy: 'units')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['unit:read'])]
     private ?Usage $usage = null;
 
     /**
@@ -39,6 +42,7 @@ class Unit
     private Collection $commandedUnits;
 
     #[ORM\ManyToOne(inversedBy: 'unit')]
+    #[Groups(['unit:read'])]
     private ?State $state = null;
 
     public function __construct()

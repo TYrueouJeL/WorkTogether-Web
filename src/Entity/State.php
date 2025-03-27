@@ -6,6 +6,7 @@ use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: StateRepository::class)]
 class State
@@ -16,6 +17,7 @@ class State
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['unit:read'])]
     private ?string $state = null;
 
     /**
