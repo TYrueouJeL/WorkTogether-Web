@@ -33,6 +33,7 @@ class Unit
      * @var Collection<int, Intervention>
      */
     #[ORM\OneToMany(targetEntity: Intervention::class, mappedBy: 'unit')]
+    #[Groups(['unit:read'])]
     private Collection $interventions;
 
     /**

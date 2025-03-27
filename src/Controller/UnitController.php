@@ -97,7 +97,7 @@ final class UnitController extends AbstractController{
         ]);
     }
 
-    #[Route('/api/unit/{id}', name: 'app_unit_api', methods: ['GET'])]
+    #[Route('/unit/{id}/api', name: 'app_unit_api', methods: ['GET'])]
     public function unitAPI(int $id, UnitRepository $unitRepository, SerializerInterface $serializer): JsonResponse
     {
         $unit = $unitRepository->find($id);

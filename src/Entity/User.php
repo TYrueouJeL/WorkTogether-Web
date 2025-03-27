@@ -85,17 +85,4 @@ class User implements PasswordAuthenticatedUserInterface
     {
         return (string) $this->email;
     }
-
-    #[ORM\Column(type: 'string', nullable: true, unique: true)]
-    private ?string $apiToken = null;
-
-    public function getApiToken(): ?string
-    {
-        return $this->apiToken;
-    }
-
-    public function setApiToken(?string $apiToken): void
-    {
-        $this->apiToken = $apiToken;
-    }
 }

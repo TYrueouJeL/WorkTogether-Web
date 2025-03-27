@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\InterventionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: InterventionRepository::class)]
 class Intervention
@@ -14,13 +15,16 @@ class Intervention
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['unit:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['unit:read'])]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'interventions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['unit:read'])]
     private ?Type $type = null;
 
     #[ORM\ManyToOne(inversedBy: 'interventions')]
