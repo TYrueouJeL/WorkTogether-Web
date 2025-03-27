@@ -13,8 +13,10 @@
                     <div>
                         <h6 class="mt-3">Intervention n°{{ intervention.id }}</h6>
                         <ul class="list-group">
-                            <li class="list-group-item">{{ intervention.title }}</li>
-                            <li class="list-group-item">{{ intervention.description }}</li>
+                            <li class="list-group-item"><strong>Titre : </strong>{{ intervention.title }}</li>
+                            <li class="list-group-item"><strong>Type : </strong>{{ intervention.type.type }}</li>
+                            <li class="list-group-item"><strong>Description : </strong>{{ intervention.description }}</li>
+                            <li class="list-group-item"><strong>Date : </strong>{{ intervention.date|date('d/m/Y H:i') }}</li>
                         </ul>
                     </div>
                 {% endfor %}

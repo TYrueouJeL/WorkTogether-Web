@@ -155,6 +155,7 @@ class AppFixtures extends Fixture
         $intervention->setDescription('Description de l\'intervention 1');
         $intervention->setType($typeTab[0]);
         $intervention->setUnit($unitTab[0]);
+        $intervention->setDate(new \DateTime());
         $interventionTab[] = $intervention;
 
         $intervention = new Intervention();
@@ -162,6 +163,7 @@ class AppFixtures extends Fixture
         $intervention->setDescription('Description de l\'intervention 2');
         $intervention->setType($typeTab[0]);
         $intervention->setUnit($unitTab[0]);
+        $intervention->setDate(new \DateTime());
         $interventionTab[] = $intervention;
 
         $customer = new Customer();

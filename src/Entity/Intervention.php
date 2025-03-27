@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InterventionRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -30,6 +31,9 @@ class Intervention
     #[ORM\ManyToOne(inversedBy: 'interventions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Unit $unit = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
     {
@@ -80,6 +84,18 @@ class Intervention
     public function setUnit(?Unit $unit): static
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
 
         return $this;
     }
