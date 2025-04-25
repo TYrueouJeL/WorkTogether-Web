@@ -55,6 +55,11 @@ class AppFixtures extends Fixture
         $usage->setColor('#6c757d');
         $usageTab[] = $usage;
 
+        $usage = new Usage();
+        $usage->setType('Indisponible');
+        $usage->setColor('#000000');
+        $usageTab[] = $usage;
+
         $pack = new Pack();
         $pack->setName('Pack Base');
         $pack->setNbrUnits(1);
@@ -95,18 +100,6 @@ class AppFixtures extends Fixture
         $pack->setAnnualReductionPercentage("60");
         $packTab[] = $pack;
 
-        $user = new User();
-        $user->setEmail('remi@remi.com');
-        $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK'); // password = testest
-        $user->setRole(1);
-        $userTab[] = $user;
-
-        $user = new User();
-        $user->setEmail('admin@admin.com');
-        $user->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
-        $user->setRole(2);
-        $userTab[] = $user;
-
         $type = new Type();
         $type->setType('Maintenance');
         $typeTab[] = $type;
@@ -121,6 +114,10 @@ class AppFixtures extends Fixture
 
         $state = new State();
         $state->setState('Éteinte');
+        $stateTab[] = $state;
+
+        $state = new State();
+        $state->setState('Indisponible');
         $stateTab[] = $state;
 
         for ($i = 1; $i <= 30; $i++) {
@@ -150,6 +147,10 @@ class AppFixtures extends Fixture
             }
         }
 
+        $bay = new Bay();
+        $bay->setReference('B031');
+        $bayTab[] = $bay;
+
         $intervention = new Intervention();
         $intervention->setTitle('Intervention 1');
         $intervention->setDescription('Description de l\'intervention 1');
@@ -163,6 +164,14 @@ class AppFixtures extends Fixture
         $intervention->setDescription('Description de l\'intervention 2');
         $intervention->setType($typeTab[0]);
         $intervention->setUnit($unitTab[0]);
+        $intervention->setDate(new \DateTime());
+        $interventionTab[] = $intervention;
+
+        $intervention = new Intervention();
+        $intervention->setTitle('Intervention 3');
+        $intervention->setDescription('Description de l\'intervention 3');
+        $intervention->setType($typeTab[0]);
+        $intervention->setUnit($unitTab[12]);
         $intervention->setDate(new \DateTime());
         $interventionTab[] = $intervention;
 
@@ -180,6 +189,38 @@ class AppFixtures extends Fixture
         $customer->setFirstname('Antonin');
         $customer->setLastname('Oracle');
         $customer->setRole(1);
+        $customerTab[] = $customer;
+
+        $customer = new Customer();
+        $customer->setEmail('remig@remig.com');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
+        $customer->setFirstname('Remi');
+        $customer->setLastname('Guerin');
+        $customer->setRole(4);
+        $customerTab[] = $customer;
+
+        $customer = new Customer();
+        $customer->setEmail('admin@admin.com');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
+        $customer->setFirstname('Admin');
+        $customer->setLastname('Admin');
+        $customer->setRole(4);
+        $customerTab[] = $customer;
+
+        $customer = new Customer();
+        $customer->setEmail('tech@tech.com');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
+        $customer->setFirstname('Tech');
+        $customer->setLastname('Tech');
+        $customer->setRole(3);
+        $customerTab[] = $customer;
+
+        $customer = new Customer();
+        $customer->setEmail('compta@compta.com');
+        $customer->setPassword('$2y$13$qwX3N3XB.9Z/VPuA/wqGkOzkM90yGmyOTb.XWcBSdJQUaixP1osZK');
+        $customer->setFirstname('Compta');
+        $customer->setLastname('Compta');
+        $customer->setRole(2);
         $customerTab[] = $customer;
 
         $order = new Order();
@@ -256,10 +297,6 @@ class AppFixtures extends Fixture
 
         foreach ($packTab as $pack) {
             $manager->persist($pack);
-        }
-
-        foreach ($userTab as $user) {
-            $manager->persist($user);
         }
 
         foreach ($typeTab as $type) {
