@@ -8,7 +8,6 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
-    {% if app.environment == 'prod' %}
         <!-- Code de suivi Matomo -->
         <script>
             var _paq = window._paq = window._paq || [];
@@ -22,7 +21,6 @@
                 g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
             })();
         </script>
-    {% endif %}
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
