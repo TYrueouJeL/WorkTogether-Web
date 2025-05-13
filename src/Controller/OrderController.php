@@ -38,6 +38,13 @@ final class OrderController extends AbstractController{
     #[Route('/order/{id}/remove-verification', name: 'app_order_remove_verification')]
     public function removeVerification(int $id, OrderRepository $orderRepository): Response
     {
+        $user = $this->getUser();
+        $order = $orderRepository->find($id);
+
+        if ($user == null || $order == null || $order->getCustomer() != $user) {
+            return $this->redirect('/');
+        }
+
         $customerId = $this->getUser()->getId();
 
         return $this->render('order/removeVerification.html.twig', [
@@ -47,8 +54,15 @@ final class OrderController extends AbstractController{
     }
 
     #[Route('/order/{id}/remove', name: 'app_order_remove')]
-    public function remove(EntityManagerInterface $entityManager, int $id): Response
+    public function remove(EntityManagerInterface $entityManager, int $id, OrderRepository $orderRepository): Response
     {
+        $user = $this->getUser();
+        $order = $orderRepository->find($id);
+
+        if ($user == null || $order == null || $order->getCustomer() != $user) {
+            return $this->redirect('/');
+        }
+
         $order = $entityManager->getRepository(Order::class)->find($id);
         $order->setEndDate(new \DateTime());
 

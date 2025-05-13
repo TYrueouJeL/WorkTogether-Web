@@ -38,24 +38,51 @@ final class UnitController extends AbstractController{
     }
 
     #[Route('/unit/{id}/turn-on', name: 'app_unit_turn_on')]
-    public function turnOn(int $id, UnitRepository $unitRepository): Response
+    public function turnOn(int $id, UnitRepository $unitRepository, CommandedUnitRepository $commandedUnitRepository): Response
     {
+        $user = $this->getUser();
+        $unit = $unitRepository->find($id);
+        $commandedUnit = $commandedUnitRepository->findOneBy(['unit' => $unit]);
+        $order = $commandedUnit->getOrders();
+
+        if ($user == null || $user != $order->getCustomer()) {
+            return $this->redirect('/');
+        }
+
         $unitRepository->turnOnUnit($id);
 
         return $this->redirect('/unit/' . $id);
     }
 
     #[Route('/unit/{id}/turn-off', name: 'app_unit_turn_off')]
-    public function turnOff(int $id, UnitRepository $unitRepository): Response
+    public function turnOff(int $id, UnitRepository $unitRepository, CommandedUnitRepository $commandedUnitRepository): Response
     {
+        $user = $this->getUser();
+        $unit = $unitRepository->find($id);
+        $commandedUnit = $commandedUnitRepository->findOneBy(['unit' => $unit]);
+        $order = $commandedUnit->getOrders();
+
+        if ($user == null || $user != $order->getCustomer()) {
+            return $this->redirect('/');
+        }
+
         $unitRepository->turnOffUnit($id);
 
         return $this->redirect('/unit/' . $id);
     }
 
     #[Route('/unit/{id}/interventions', name: 'app_unit_intervention')]
-    public function intervention(int $id, UnitRepository $unitRepository, InterventionRepository $interventionRepository): Response
+    public function intervention(int $id, UnitRepository $unitRepository, InterventionRepository $interventionRepository, CommandedUnitRepository $commandedUnitRepository): Response
     {
+        $user = $this->getUser();
+        $unit = $unitRepository->find($id);
+        $commandedUnit = $commandedUnitRepository->findOneBy(['unit' => $unit]);
+        $order = $commandedUnit->getOrders();
+
+        if ($user == null || $user != $order->getCustomer()) {
+            return $this->redirect('/');
+        }
+
         $unit = $unitRepository->find($id);
         $interventions = $interventionRepository->findBy(['unit' => $unit]);
 
@@ -66,8 +93,17 @@ final class UnitController extends AbstractController{
     }
 
     #[Route('/unit/{id}/usage', name: 'app_unit_usage')]
-    public function usage(int $id, UnitRepository $unitRepository, UsageRepository $usageRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function usage(int $id, UnitRepository $unitRepository, UsageRepository $usageRepository, Request $request, EntityManagerInterface $entityManager, CommandedUnitRepository $commandedUnitRepository): Response
     {
+        $user = $this->getUser();
+        $unit = $unitRepository->find($id);
+        $commandedUnit = $commandedUnitRepository->findOneBy(['unit' => $unit]);
+        $order = $commandedUnit->getOrders();
+
+        if ($user == null || $user != $order->getCustomer()) {
+            return $this->redirect('/');
+        }
+
         $unit = $unitRepository->find($id);
 
         $usages = $usageRepository->findAll();
