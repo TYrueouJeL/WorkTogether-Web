@@ -37,6 +37,13 @@ class CommandController extends AbstractController
 
         $availableUnits = $unitRepository->findAvailableUnits($numberOfUnits);
 
+        if (count($availableUnits) < $numberOfUnits) {
+            return $this->render('command/not_enough_units.html.twig', [
+                'requiredUnits' => $numberOfUnits,
+                'availableUnits' => count($availableUnits),
+            ]);
+        }
+
         // Réception du formulaire
         if ($form->isSubmitted() && $form->isValid()) {
             $subscriptionTime = $form->get('subscriptionTime')->getData();

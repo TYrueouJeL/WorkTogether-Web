@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation d'unité{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h2 class="text-primary text-center mb-4">Réservation</h2>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6 d-flex">
+                <div class="border rounded p-4 shadow-sm bg-light w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="text-dark">Il n'y a plus assez d'unitées disponibles</h4>
+                        <p class="fw-bold">Unitées requises : {{ requiredUnits }}</p>
+                        <p class="fw-bold">Unitées disponibles : {{ availableUnits }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-secondary">Retour</a>
+        </div>
+    </div>
+{% endblock %}
