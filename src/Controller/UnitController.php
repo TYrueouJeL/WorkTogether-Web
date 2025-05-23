@@ -24,7 +24,7 @@ final class UnitController extends AbstractController{
     {
         $user = $this->getUser();
         $unit = $unitRepository->find($id);
-        $commandedUnit = $commandedUnitRepository->findOneBy(['unit' => $unit]);
+        $commandedUnit = $commandedUnitRepository->findActiveByUnit($unit);
         $order = $commandedUnit->getOrders();
 
         if ($user == null || $user != $order->getCustomer()) {
