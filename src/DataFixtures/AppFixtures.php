@@ -120,7 +120,7 @@ class AppFixtures extends Fixture
         $state->setState('Indisponible');
         $stateTab[] = $state;
 
-        for ($i = 1; $i <= 30; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $bay = new Bay();
             if ($i < 10) {
                 $bay->setReference('B' . str_pad($i, 3, '0', STR_PAD_LEFT));
