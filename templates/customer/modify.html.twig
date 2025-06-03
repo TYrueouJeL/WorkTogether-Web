@@ -5,7 +5,13 @@
 {% block body %}
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
-            <h1 class="h4 text-center text-primary mb-3">Modification de {{ option }}</h1>
+            <h1 class="h4 text-center text-primary mb-3">
+                Modification de votre
+                {% if option == 'firstname' %}prénom
+                {% elseif option == 'lastname' %}nom
+                {% elseif option == 'password' %}mot de passe
+                {% endif %}
+            </h1>
 
             <form method="post">
                 {% if option == 'firstname' %}
