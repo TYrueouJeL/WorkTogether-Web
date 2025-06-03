@@ -21,7 +21,7 @@ class OrderReservationFormType extends AbstractType
             ->add('subscriptionTime', ChoiceType::class, [
                 'mapped' => false,
                 'required' => true,
-                'label' => 'Durée de subscription (en mois)',
+                'label' => "Durée d'abonnement (en mois)",
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
